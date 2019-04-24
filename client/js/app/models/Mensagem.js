@@ -1,8 +1,7 @@
 class Mensagem {
 
-    constructor(armadilha, texto = '') {
+    constructor(texto = '') {
         this._texto = texto;
-        this._armadilha = armadilha;
     }
 
     get texto() {
@@ -11,6 +10,5 @@ class Mensagem {
 
     set texto(texto) {
         this._texto = texto;
-        this._armadilha(this);
     }
 }
