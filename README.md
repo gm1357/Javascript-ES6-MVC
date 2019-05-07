@@ -6,5 +6,6 @@ Repositório com projeto desenvolvido seguindo os cursos de Javascript Avançado
 
  - Entre em /server
  - `npm install`
+ - `npm run build`
  - `npm start`
  - Aplicação estará acessível em `localhost:3000`
