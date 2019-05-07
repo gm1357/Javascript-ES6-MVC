@@ -105,7 +105,7 @@ class NegociacaoController {
     }
 }
 
-let negociacaoController = new NegociacaoController;
+let negociacaoController = new NegociacaoController();
 
 export function currentInstance() {
     return negociacaoController;
