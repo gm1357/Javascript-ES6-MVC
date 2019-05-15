@@ -1,6 +1,7 @@
 const path = require('path');
 const extractTextPlugin = require('extract-text-webpack-plugin');
 const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 let plugins = [];
@@ -8,6 +9,17 @@ let plugins = [];
 plugins.push(
     new extractTextPlugin("styles.css")
 );
+
+plugins.push(new HtmlWebpackPlugin({
+    hash: true,
+    minify: {
+        html5: true,
+        collapseWhitespace: true,
+        removeComments: true,
+    },    
+    filename: 'index.html',
+    template: __dirname + '/main.html'
+}));
 
 if (process.env.NODE_ENV == 'prod') {
     plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
@@ -22,8 +34,7 @@ module.exports = {
     entry: './js/app-es6/main.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: 'dist'
+        path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
