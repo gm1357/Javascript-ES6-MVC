@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -p --process.env.NODE_ENV=production --config webpack.config.js",
-    "build-dev": "webpack -d --config webpack.config.js",
+    "build": "cross-env NODE_ENV=prod webpack -p --config webpack.config.js",
+    "build-dev": "cross-env NODE_ENV=dev webpack -d --config webpack.config.js",
     "start": "webpack-dev-server"
   },
   "author": "Gabriel Machado",
@@ -15,6 +15,7 @@
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "babel-loader": "^8.0.6",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

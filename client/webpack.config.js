@@ -1,6 +1,7 @@
 const path = require('path');
 const extractTextPlugin = require('extract-text-webpack-plugin');
 const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack');
 
 let plugins = [];
 
@@ -8,11 +9,14 @@ plugins.push(
     new extractTextPlugin("styles.css")
 );
 
-plugins.push(new optimizeCSSAssetsPlugin({
-    cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
-    }
-}));
+if (process.env.NODE_ENV == 'prod') {
+    plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
+    plugins.push(new optimizeCSSAssetsPlugin({
+        cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+        }
+    }));
+}
 
 module.exports = {
     entry: './js/app-es6/main.js',
