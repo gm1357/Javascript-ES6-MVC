@@ -1,4 +1,18 @@
 const path = require('path');
+const extractTextPlugin = require('extract-text-webpack-plugin');
+const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+let plugins = [];
+
+plugins.push(
+    new extractTextPlugin("styles.css")
+);
+
+plugins.push(new optimizeCSSAssetsPlugin({
+    cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }],
+    }
+}));
 
 module.exports = {
     entry: './js/app-es6/main.js',
@@ -15,7 +29,31 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            },
+            {
+                test: /\.css$/,
+                use: extractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                })
+            },
+            { 
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff' 
+            },
+            { 
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+            },
+            { 
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'file-loader' 
+            },
+            { 
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'url-loader?limit=10000&mimetype=image/svg+xml' 
             }
         ]
-    }
+    },
+    plugins: plugins
 }
