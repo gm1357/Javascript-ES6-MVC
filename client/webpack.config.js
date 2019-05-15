@@ -21,7 +21,10 @@ plugins.push(new HtmlWebpackPlugin({
     template: __dirname + '/main.html'
 }));
 
+let SERVICE_URL = JSON.stringify('http://localhost:3000');
 if (process.env.NODE_ENV == 'prod') {
+    SERVICE_URL = JSON.stringify('http://localhost:4000');
+
     plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
     plugins.push(new optimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {
@@ -29,6 +32,8 @@ if (process.env.NODE_ENV == 'prod') {
         }
     }));
 }
+
+plugins.push(new webpack.DefinePlugin({ SERVICE_URL }));
 
 module.exports = {
     entry: './js/app-es6/main.js',
