@@ -36,7 +36,7 @@ if (process.env.NODE_ENV == 'prod') {
 plugins.push(new webpack.DefinePlugin({ SERVICE_URL }));
 
 module.exports = {
-    entry: './js/app-es6/main.js',
+    entry: './js/app-ts/main.ts',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -44,11 +44,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.css$/,
@@ -74,6 +72,9 @@ module.exports = {
                 loader: 'url-loader?limit=10000&mimetype=image/svg+xml' 
             }
         ]
+    },
+    resolve: {
+        extensions: [ '.tsx', '.ts', '.js' ]
     },
     plugins: plugins
 }
