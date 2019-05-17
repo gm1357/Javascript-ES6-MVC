@@ -5,12 +5,12 @@ export class NegociacaoDao {
     _connection: any;
     _store: string;
 
-    constructor(connection) {
+    constructor(connection: any) {
         this._connection = connection;
         this._store = 'negociacoes';
     }
 
-    adiciona(negociacao) {
+    adiciona(negociacao: Negociacao): Promise<any> {
         return new Promise((resolve, reject) => {
 
             let request = this._connection
@@ -18,18 +18,19 @@ export class NegociacaoDao {
                             .objectStore(this._store)
                             .add(negociacao);
 
-            request.onsuccess = e => {
+            request.onsuccess = (e: Event) => {
                 resolve();
             };
 
-            request.onerror = e => {
-                console.log(e.target.error);
+            request.onerror = (e: Event) => {
+                let target: any = e.target;
+                console.log(target.error);
                 reject('Não foi possível adicionar a negociação');
             };
         });
     }
 
-    listaTodos(): Promise<Array<Negociacao>> {
+    listaTodos(): Promise<Negociacao[]> {
         return new Promise((resolve, reject) => {
 
             let cursor = this._connection
@@ -37,10 +38,11 @@ export class NegociacaoDao {
                             .objectStore(this._store)
                             .openCursor();
 
-            let negociacoes = [];
+            let negociacoes: Negociacao[] = [];
 
-            cursor.onsuccess = e => {
-                let atual = e.target.result;
+            cursor.onsuccess = (e: Event) => {
+                let target: any = e.target;
+                let atual = target.result;
 
                 if(atual) {
                     let dado = atual.value;
@@ -53,14 +55,15 @@ export class NegociacaoDao {
                 }
             };
 
-            cursor.onerror = e => {
-                console.log(e.target.error);
+            cursor.onerror = (e: Event) => {
+                let target: any = e.target;
+                console.log(target.error);
                 reject('Não foi possível listar as negociações');
             };
         });
     }
 
-    apagaTodos() {
+    apagaTodos(): Promise<string> {
         return new Promise((resolve, reject) => {
 
             let request = this._connection
@@ -68,10 +71,11 @@ export class NegociacaoDao {
                 .objectStore(this._store)
                 .clear();
    
-            request.onsuccess = e => resolve('Negociações apagadas com sucesso');
+            request.onsuccess = (e: Event) => resolve('Negociações apagadas com sucesso');
    
-            request.onerror = e => {
-                console.log(e.target.error);
+            request.onerror = (e: Event) => {
+                let target: any = e.target;
+                console.log(target.error);
                 reject('Não foi possível apagar as negociações');
             };
         });

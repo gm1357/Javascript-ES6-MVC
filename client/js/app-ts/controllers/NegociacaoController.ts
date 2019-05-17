@@ -55,7 +55,7 @@ class NegociacaoController {
         }, 3000);
     }
 
-    adiciona(event) {
+    adiciona(event: Event): void {
         event.preventDefault();
 
         let negociacao = this._criaNegociacao();
@@ -69,7 +69,7 @@ class NegociacaoController {
             }).catch(erro => this._mensagem.texto = erro);
     }
 
-    importaNegociacoes() {
+    importaNegociacoes(): void {
         this._service
             .importa(this._listaNegociacoes.negociacoes)
             .then(negociacoes => {
@@ -79,33 +79,33 @@ class NegociacaoController {
             .catch(error => this._mensagem.texto = error);
     }
 
-    ordena(coluna) {
+    ordena(coluna: string): void {
         if(this._ordemAtual == coluna) {
             this._listaNegociacoes.inverteOrdem();
         } else {
-            this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);    
+            this._listaNegociacoes.ordena((a: any, b: any) => a[coluna] - b[coluna]);    
         }
         this._ordemAtual = coluna;
     }
 
-    apaga() {
+    apaga(): void {
         this._service
             .apaga()
-            .then(mensagem => {
+            .then((mensagem: string) => {
                 this._mensagem.texto = mensagem;
                 this._listaNegociacoes.esvazia();
             })
-            .catch(erro => this._mensagem.texto = erro);
+            .catch((erro: string) => this._mensagem.texto = erro);
     }
 
-    _criaNegociacao() {
+    _criaNegociacao(): Negociacao {
         return new Negociacao(
             DateHelper.textoParaData(this._inputData.value),
             parseInt(this._inputQuantidade.value),
             parseFloat(this._inputValor.value));
     }
 
-    _limpaFormulario() {
+    _limpaFormulario(): void {
         this._inputData.value = '';
         this._inputQuantidade.value = '1';
         this._inputValor.value = '0.0';
@@ -115,6 +115,6 @@ class NegociacaoController {
 
 let negociacaoController = new NegociacaoController();
 
-export function currentInstance() {
+export function currentInstance(): NegociacaoController {
     return negociacaoController;
 }

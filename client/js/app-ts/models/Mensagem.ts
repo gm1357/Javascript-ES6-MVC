@@ -1,16 +1,12 @@
 export class Mensagem {
-    
-    _texto: string;
 
-    constructor(texto = '') {
-        this._texto = texto;
-    }
+    constructor(private _texto: string = '') {}
 
-    get texto() {
+    get texto(): string {
         return this._texto;
     }
 
-    set texto(texto) {
+    set texto(texto: string) {
         this._texto = texto;
     }
 }

@@ -1,32 +1,34 @@
+import { Negociacao } from "./Negociacao";
+
 export class ListaNegociacoes {
     
-    _negociacoes: any[];
+    _negociacoes: Negociacao[];
 
     constructor() {
         this._negociacoes = [];
     }
 
-    adiciona(negociacao) {
+    adiciona(negociacao: Negociacao): void {
         this._negociacoes.push(negociacao);
     }
 
-    get negociacoes() {
+    get negociacoes(): Negociacao[] {
         return [].concat(this._negociacoes);
     }
 
-    get volumeTotal() {
+    get volumeTotal(): number {
         return this._negociacoes.reduce((total, n) => total + n.volume, 0.0);
      }
 
-    esvazia() {
+    esvazia(): void {
         this._negociacoes = [];
     }
 
-    ordena(criterio) {
+    ordena(criterio: any): void {
         this._negociacoes.sort(criterio);        
     }
 
-    inverteOrdem() {
+    inverteOrdem(): void {
         this._negociacoes.reverse();
     }
 }

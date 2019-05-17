@@ -2,8 +2,8 @@ const STORES = ['negociacoes'];
 const VERSION = 3;
 const DB_NAME = 'aluraframe';
 
-let connection = null;
-let close = null;
+let connection: any = null;
+let close: any = null;
 
 export class ConnectionFactory {
 
@@ -11,7 +11,7 @@ export class ConnectionFactory {
         throw new Error('Não é possível criar instâncias de ConnectionFactory');
     }
 
-    static getConnection() {
+    static getConnection(): Promise<any> {
         return new Promise((resolve, reject) => {
             let openRequest = window.indexedDB.open(DB_NAME, VERSION);
 
@@ -43,14 +43,14 @@ export class ConnectionFactory {
         })
     }
 
-    static closeConnection() {
+    static closeConnection(): void {
         if (connection) {
             close();
             connection = null;
         }
     }
     
-    static _createStores(connection) {
+    static _createStores(connection: any): void {
         STORES.forEach(store => {
             if (connection.objectStoreNames.contains(store)) {
                 connection.deleteObjectStore(store);

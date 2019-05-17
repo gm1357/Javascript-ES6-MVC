@@ -1,10 +1,10 @@
 export class ProxyFactory {
 
-    static create(objeto, props, acao) {
+    static create(objeto: any, props: any, acao: Function): ProxyConstructor {
 
         return new Proxy(objeto, {
 
-            get(target, prop, receiver) {
+            get(target: any, prop: any, receiver: any) {
                 if (props.includes(prop) && ProxyFactory._ehFuncao(target[prop])) {
                     
                     return function() {
@@ -29,7 +29,7 @@ export class ProxyFactory {
         });
     }
 
-    static _ehFuncao(func) {
+    static _ehFuncao(func: any): boolean {
         return typeof(func) == typeof(Function);
     }
 }

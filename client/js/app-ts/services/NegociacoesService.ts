@@ -11,62 +11,62 @@ export class NegociacoesService {
         this._http = new HttpService();
     }
 
-    obterNegociacoesDaSemana() {
+    obterNegociacoesDaSemana(): Promise<Negociacao[]> {
 
         return this._http.get(`${SERVICE_URL}/negociacoes/semana`)
-            .then(negociacoes => {
+            .then((negociacoes: Negociacao[]) => {
                 console.log(negociacoes);
-                return negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
-            }).catch(erro => {
+                return negociacoes.map((objeto: Negociacao) => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+            }).catch((erro: Error) => {
                 console.log(erro);
                 throw new Error('Não foi possível obter as negociações da semana');
             });
     }
     
-    obterNegociacoesDaSemanaAnterior() {
+    obterNegociacoesDaSemanaAnterior(): Promise<Negociacao[]> {
 
          return this._http.get(`${SERVICE_URL}/negociacoes/anterior`)
-            .then(negociacoes => {
+            .then((negociacoes: Negociacao[]) => {
                 console.log(negociacoes);
-                return negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
-            }).catch(erro => {
+                return negociacoes.map((objeto: Negociacao) => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+            }).catch((erro: Error) => {
                 console.log(erro);
                 throw new Error('Não foi possível obter as negociações da semana anterior');
             });
     }
 
-    obterNegociacoesDaSemanaRetrasada() {
+    obterNegociacoesDaSemanaRetrasada(): Promise<Negociacao[]> {
 
         return this._http.get(`${SERVICE_URL}/negociacoes/retrasada`)
-            .then(negociacoes => {
+            .then((negociacoes: Negociacao[]) => {
                 console.log(negociacoes);
-                return negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
-            }).catch(erro => {
+                return negociacoes.map((objeto: Negociacao) => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+            }).catch((erro: Error) => {
                 console.log(erro);
                 throw new Error('Não foi possível obter as negociações da semana retrasada');
             });
     }
 
-    obterNegociacoes() {
+    obterNegociacoes(): Promise<Negociacao[]> {
 
         return Promise.all([
             this.obterNegociacoesDaSemana(),
             this.obterNegociacoesDaSemanaAnterior(),
             this.obterNegociacoesDaSemanaRetrasada()
-        ]).then(periodos => {
-            let negociacoes = periodos
+        ]).then((periodos: Negociacao[][]) => {
+            let negociacoes: Negociacao[] = periodos
                 .reduce((dados, periodo) => dados.concat(periodo), []);
             return negociacoes;
-        }).catch(erro => {
+        }).catch((erro: string) => {
             throw new Error(erro);
         });
     }
 
-    cadastra(negociacao) {
+    cadastra(negociacao: Negociacao): Promise<string> {
         return ConnectionFactory
             .getConnection()
-            .then(connection => new NegociacaoDao(connection))
-            .then(dao => dao.adiciona(negociacao))
+            .then((connection: any) => new NegociacaoDao(connection))
+            .then((dao: NegociacaoDao) => dao.adiciona(negociacao))
             .then(() => 'Negociação adicionada com sucesso')
             .catch(erro => {
                 console.log(erro);
@@ -74,7 +74,7 @@ export class NegociacoesService {
             });
     }
 
-    lista(): Promise<Array<Negociacao>>  {
+    lista(): Promise<Negociacao[]>  {
         return ConnectionFactory
             .getConnection()
             .then(connection => new NegociacaoDao(connection))
@@ -85,7 +85,7 @@ export class NegociacoesService {
             });
     }
 
-    apaga() {
+    apaga(): any {
         return ConnectionFactory
             .getConnection()
             .then(connection => new NegociacaoDao(connection))
@@ -97,11 +97,11 @@ export class NegociacoesService {
             });
     }
 
-    importa(listaAtual) {
+    importa(listaAtual: Negociacao[]): Promise<Negociacao[]> {
         return this.obterNegociacoes()
             .then(negociacoes => negociacoes.filter(
                 negociacao => !listaAtual.some(
-                    negociacaoExistente => negociacaoExistente.isEquals(negociacao)
+                    (negociacaoExistente: Negociacao) => negociacaoExistente.isEquals(negociacao)
                 )
             ))
             .catch(erro => {

@@ -2,7 +2,7 @@ import { View } from './View';
 
 export class MensagemView extends View {
 
-    template(model) {
+    template(model: any): string {
         return model.texto ? `<p class="alert alert-info">${model.texto}</p>` : '<p></p>';
     }
 }

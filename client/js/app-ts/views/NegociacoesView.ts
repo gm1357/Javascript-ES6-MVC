@@ -1,21 +1,23 @@
 import { View } from './View';
 import { DateHelper } from '../helpers/DateHelper';
 import { currentInstance } from '../controllers/NegociacaoController';
+import { Negociacao } from '../models/Negociacao';
 
 export class NegociacoesView extends View {
 
-    constructor(elemento) {
+    constructor(elemento: HTMLElement) {
         super(elemento);
 
-        elemento.addEventListener('click', function(event) {
+        elemento.addEventListener('click', function(event: Event) {
+            const target: any = event.target;
 
-            if(event.target.nodeName == 'TH') {
-                currentInstance().ordena(event.target.textContent.toLowerCase());
+            if(target.nodeName == 'TH') {
+                currentInstance().ordena(target.textContent.toLowerCase());
             }
         })
     }
 
-    template(model) {
+    template(model: any): string {
         return `
         <table class="table table-hover table-bordered">
             <thead>
@@ -28,7 +30,7 @@ export class NegociacoesView extends View {
             </thead>
             
             <tbody>
-                ${model.negociacoes.map(n => `
+                ${model.negociacoes.map((n: Negociacao) => `
                     <tr>
                         <td>${DateHelper.dataParaTexto(n.data)}</td>
                         <td>${n.quantidade}</td>

@@ -1,16 +1,16 @@
 export class View {
     
-    _elemento: any;
+    _elemento: HTMLElement;
 
-    constructor(elemento) {
+    constructor(elemento: HTMLElement) {
         this._elemento = elemento;
     }
 
-    template(model) {
+    template(model: any): string {
         throw new Error('O método template deve ser implementado');
     }
 
-    update(model) {
+    update(model: any): void {
         this._elemento.innerHTML = this.template(model);
     }
 }
