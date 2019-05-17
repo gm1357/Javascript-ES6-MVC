@@ -33,7 +33,9 @@ if (process.env.NODE_ENV == 'prod') {
     }));
 }
 
-plugins.push(new webpack.DefinePlugin({ SERVICE_URL }));
+plugins.push(new webpack.DefinePlugin({
+    SERVICE_URL: SERVICE_URL 
+}));
 
 module.exports = {
     entry: './js/app-ts/main.ts',

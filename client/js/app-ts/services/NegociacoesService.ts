@@ -2,8 +2,10 @@ import { HttpService } from './HttpService';
 import { ConnectionFactory } from './ConnectionFactory';
 import { NegociacaoDao } from '../dao/NegociacaoDao';
 import { Negociacao } from '../models/Negociacao';
+import { SERVICE_URL } from '../constatnts';
 
 export class NegociacoesService {
+    _http: HttpService;
 
     constructor() {
         this._http = new HttpService();
@@ -72,7 +74,7 @@ export class NegociacoesService {
             });
     }
 
-    lista() {
+    lista(): Promise<Array<Negociacao>>  {
         return ConnectionFactory
             .getConnection()
             .then(connection => new NegociacaoDao(connection))

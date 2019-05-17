@@ -1,10 +1,12 @@
 export class View {
+    
+    _elemento: any;
 
     constructor(elemento) {
         this._elemento = elemento;
     }
 
-    template() {
+    template(model) {
         throw new Error('O método template deve ser implementado');
     }
 

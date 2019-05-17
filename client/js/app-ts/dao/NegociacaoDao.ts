@@ -2,6 +2,9 @@ import { Negociacao } from '../models/Negociacao';
 
 export class NegociacaoDao {
 
+    _connection: any;
+    _store: string;
+
     constructor(connection) {
         this._connection = connection;
         this._store = 'negociacoes';
@@ -26,7 +29,7 @@ export class NegociacaoDao {
         });
     }
 
-    listaTodos() {
+    listaTodos(): Promise<Array<Negociacao>> {
         return new Promise((resolve, reject) => {
 
             let cursor = this._connection

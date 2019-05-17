@@ -16,12 +16,15 @@ export class ConnectionFactory {
             let openRequest = window.indexedDB.open(DB_NAME, VERSION);
 
             openRequest.onupgradeneeded = e => {
-                ConnectionFactory._createStores(e.target.result);
+                let target: any = e.target;
+                ConnectionFactory._createStores(target.result);
             };
             
             openRequest.onsuccess = e => {
+                let target: any = e.target;
+
                 if (!connection) {
-                    connection = e.target.result;
+                    connection = target.result;
 
                     close = connection.close.bind(connection);
                     connection.close = function() {
@@ -29,12 +32,13 @@ export class ConnectionFactory {
                     }
                 }
 
-                resolve(e.target.result);
+                resolve(target.result);
             };
             
             openRequest.onerror = e => {
-                console.log(e.target.error);
-                reject(e.target.error.name);
+                let target: any = e.target;
+                console.log(target.error);
+                reject(target.error.name);
             };
         })
     }

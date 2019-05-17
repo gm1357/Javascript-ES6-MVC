@@ -1,4 +1,6 @@
 export class ListaNegociacoes {
+    
+    _negociacoes: any[];
 
     constructor() {
         this._negociacoes = [];

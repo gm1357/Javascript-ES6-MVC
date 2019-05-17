@@ -9,6 +9,14 @@ import { Bind } from '../helpers/Bind';
 
 class NegociacaoController {
 
+    private _inputData: HTMLInputElement;
+    private _inputQuantidade: HTMLInputElement;
+    private _inputValor: HTMLInputElement;
+    private _ordemAtual: string;
+    private _listaNegociacoes: any;
+    private _mensagem: any;
+    private _service: NegociacoesService;
+
     constructor() {
         let $ = document.querySelector.bind(document);
 
@@ -99,8 +107,8 @@ class NegociacaoController {
 
     _limpaFormulario() {
         this._inputData.value = '';
-        this._inputQuantidade.value = 1;
-        this._inputValor.value = 0.0;
+        this._inputQuantidade.value = '1';
+        this._inputValor.value = '0.0';
         this._inputData.focus();
     }
 }

@@ -1,4 +1,6 @@
 export class Mensagem {
+    
+    _texto: string;
 
     constructor(texto = '') {
         this._texto = texto;

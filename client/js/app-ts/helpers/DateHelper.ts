@@ -9,7 +9,7 @@ export class DateHelper {
             throw new Error('Deve estar no formato aaaa-mm-dd');
         }
 
-        return new Date(...data.split('-').map((item, index) => item - index % 2));
+        return new Date(...<[number, number, number]> data.split('-').map((item, index) => item - index % 2));
     }
 
     static dataParaTexto(data) {
